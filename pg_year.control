@@ -1,0 +1,5 @@
+# pg_year postgresql extension
+comment = 'YEAR data type'
+default_version = '0.0.1'
+module_pathname = '$libdir/pg_year'
+relocatable = false
