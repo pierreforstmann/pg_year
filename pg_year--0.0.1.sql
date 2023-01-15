@@ -1,5 +1,8 @@
 -- pg_year--0.0.1.sql
 
+CREATE TYPE year;
+
+
 CREATE FUNCTION year_in(cstring)
 RETURNS year 
 AS '$libdir/pg_year'
@@ -18,7 +21,6 @@ CREATE TYPE year (
   STORAGE        = PLAIN,
   PASSEDBYVALUE
 );
-
 
 CREATE FUNCTION year_add(year, int)
     RETURNS year 
@@ -43,3 +45,12 @@ CREATE OPERATOR - (
     rightarg = int,
     function = year_minus
 );
+
+CREATE CAST(int AS year)
+WITH INOUT
+AS IMPLICIT;
+
+CREATE CAST(text AS year)
+WITH INOUT
+AS IMPLICIT;
+
