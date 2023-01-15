@@ -25,6 +25,8 @@ void		_PG_fini(void);
 
 PG_FUNCTION_INFO_V1(year_in);
 PG_FUNCTION_INFO_V1(year_out);
+PG_FUNCTION_INFO_V1(year_add);
+PG_FUNCTION_INFO_V1(year_minus);
 
 /*---- Global variable declarations ----*/
 
@@ -86,7 +88,6 @@ Datum year_in(PG_FUNCTION_ARGS)
 	PG_RETURN_INT16((result - 1901));
 }
 
-
 Datum year_out(PG_FUNCTION_ARGS)
 {
 	int16 arg = PG_GETARG_INT16(0);
@@ -98,4 +99,55 @@ Datum year_out(PG_FUNCTION_ARGS)
 }
 
 
+Datum year_add(PG_FUNCTION_ARGS)
+{
+	int16	result;
+	int16 	arg1 = PG_GETARG_INT16(0);
+	int16 	arg2 = PG_GETARG_INT16(1);
 
+	result = arg1 + 1901 + arg2; 
+	if (result > 2155) {
+	      ereport(ERROR,
+               (
+                errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+                errmsg("year cannot be greater than 2155"),
+                errdetail("value %d is greater than 2155", result),
+                errhint("make it lower or equal than 2155")
+               )
+	      );
+	}
+	
+	result = result - 1901;
+	PG_RETURN_INT16(result);
+}
+
+Datum year_minus(PG_FUNCTION_ARGS)
+{
+	int16	result;
+	int16 	arg1 = PG_GETARG_INT16(0);
+	int16 	arg2 = PG_GETARG_INT16(1);
+	
+	result = arg1 + 1901 - arg2; 
+	if (result < 1901) {
+	      ereport(ERROR,
+               (
+                errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+                errmsg("year cannot be lower than 1901"),
+                errdetail("value %d is lower than 1901", result),
+                errhint("make it greater or equal than 1901")
+               )
+	      );
+	} else if (result > 2155) {
+	      ereport(ERROR,
+               (
+                errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+                errmsg("year cannot be greater than 2155"),
+                errdetail("value %d is greater than 2155", result),
+                errhint("make it lower or equal than 2155")
+               )
+	      );
+	}
+
+	result = result - 1901;
+	PG_RETURN_INT16(result);
+}

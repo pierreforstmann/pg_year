@@ -19,3 +19,27 @@ CREATE TYPE year (
   PASSEDBYVALUE
 );
 
+
+CREATE FUNCTION year_add(year, int)
+    RETURNS year 
+    AS '$libdir/pg_year'
+    LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR + (
+    leftarg = year,
+    rightarg = int,
+    function = year_add,
+    commutator = +
+);
+
+
+CREATE FUNCTION year_minus(year, int)
+    RETURNS year 
+    AS '$libdir/pg_year'
+    LANGUAGE C IMMUTABLE STRICT;
+
+CREATE OPERATOR - (
+    leftarg = year,
+    rightarg = int,
+    function = year_minus
+);
