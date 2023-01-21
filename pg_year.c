@@ -11,10 +11,9 @@
 */
 #include "postgres.h"
 
-#include "utils/guc.h"
-#include "utils/fmgrprotos.h"
-#include "fmgr.h"
-#include "funcapi.h"
+#include "catalog/pg_type.h"
+#include "utils/builtins.h"
+#include "access/hash.h"
 
 PG_MODULE_MAGIC;
 
@@ -27,6 +26,16 @@ PG_FUNCTION_INFO_V1(year_in);
 PG_FUNCTION_INFO_V1(year_out);
 PG_FUNCTION_INFO_V1(year_add);
 PG_FUNCTION_INFO_V1(year_minus);
+/*     -------------------      */
+PG_FUNCTION_INFO_V1(year_eq);
+PG_FUNCTION_INFO_V1(year_ne);
+PG_FUNCTION_INFO_V1(year_lt);
+PG_FUNCTION_INFO_V1(year_le);
+PG_FUNCTION_INFO_V1(year_gt);
+PG_FUNCTION_INFO_V1(year_ge);
+PG_FUNCTION_INFO_V1(year_cmp);
+PG_FUNCTION_INFO_V1(hash_year);
+
 
 /*---- Global variable declarations ----*/
 
@@ -150,4 +159,67 @@ Datum year_minus(PG_FUNCTION_ARGS)
 
 	result = result - 1901;
 	PG_RETURN_INT16(result);
+}
+
+Datum year_eq(PG_FUNCTION_ARGS)
+{
+	int16	arg1 = PG_GETARG_INT16(0);
+	int16	arg2 = PG_GETARG_INT16(1);
+
+	PG_RETURN_BOOL(arg1 == arg2);
+}
+
+Datum year_ne(PG_FUNCTION_ARGS)
+{
+	int16	arg1 = PG_GETARG_INT16(0);
+	int16	arg2 = PG_GETARG_INT16(1);
+
+	PG_RETURN_BOOL(arg1 != arg2);
+}
+
+Datum year_lt(PG_FUNCTION_ARGS)
+{
+	int16	arg1 = PG_GETARG_INT16(0);
+	int16	arg2 = PG_GETARG_INT16(1);
+
+	PG_RETURN_BOOL(arg1 < arg2);
+}
+
+Datum year_le(PG_FUNCTION_ARGS)
+{
+	int16	arg1 = PG_GETARG_INT16(0);
+	int16	arg2 = PG_GETARG_INT16(1);
+
+	PG_RETURN_BOOL(arg1 <= arg2);
+}
+
+Datum year_gt(PG_FUNCTION_ARGS)
+{
+	int16	arg1 = PG_GETARG_INT16(0);
+	int16	arg2 = PG_GETARG_INT16(1);
+
+	PG_RETURN_BOOL(arg1 > arg2);
+}
+
+Datum year_ge(PG_FUNCTION_ARGS)
+{
+	int16	arg1 = PG_GETARG_INT16(0);
+	int16	arg2 = PG_GETARG_INT16(1);
+
+	PG_RETURN_BOOL(arg1 >= arg2);
+}
+
+Datum year_cmp(PG_FUNCTION_ARGS)
+{
+	int16	arg1 = PG_GETARG_INT16(0);
+	int16	arg2 = PG_GETARG_INT16(1);
+
+	PG_RETURN_INT16(arg1 - arg2);
+}
+
+
+Datum hash_year(PG_FUNCTION_ARGS)
+{
+
+	return(hash_uint32((int32)PG_GETARG_INT16(0)));
 }
