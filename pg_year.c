@@ -163,63 +163,63 @@ Datum year_minus(PG_FUNCTION_ARGS)
 
 Datum year_eq(PG_FUNCTION_ARGS)
 {
-	uint8	arg1 = PG_GETARG_CHAR(0);
-	uint8	arg2 = PG_GETARG_CHAR(1);
+	uint8	arg1 = PG_GETARG_UINT16(0);
+	uint8	arg2 = PG_GETARG_UINT16(1);
 
 	PG_RETURN_BOOL(arg1 == arg2);
 }
 
 Datum year_ne(PG_FUNCTION_ARGS)
 {
-	uint8	arg1 = PG_GETARG_CHAR(0);
-	uint8	arg2 = PG_GETARG_CHAR(1);
+	uint8	arg1 = PG_GETARG_UINT16(0);
+	uint8	arg2 = PG_GETARG_UINT16(1);
 
 	PG_RETURN_BOOL(arg1 != arg2);
 }
 
 Datum year_lt(PG_FUNCTION_ARGS)
 {
-	uint8	arg1 = PG_GETARG_CHAR(0);
-	uint8	arg2 = PG_GETARG_CHAR(1);
+	uint8	arg1 = PG_GETARG_UINT16(0);
+	uint8	arg2 = PG_GETARG_UINT16(1);
 
 	PG_RETURN_BOOL(arg1 < arg2);
 }
 
 Datum year_le(PG_FUNCTION_ARGS)
 {
-	uint8	arg1 = PG_GETARG_CHAR(0);
-	uint8	arg2 = PG_GETARG_CHAR(1);
+	uint8	arg1 = PG_GETARG_UINT16(0);
+	uint8	arg2 = PG_GETARG_UINT16(1);
 
 	PG_RETURN_BOOL(arg1 <= arg2);
 }
 
 Datum year_gt(PG_FUNCTION_ARGS)
 {
-	uint8	arg1 = PG_GETARG_CHAR(0);
-	uint8	arg2 = PG_GETARG_CHAR(1);
+	uint8	arg1 = PG_GETARG_UINT16(0);
+	uint8	arg2 = PG_GETARG_UINT16(1);
 
 	PG_RETURN_BOOL(arg1 > arg2);
 }
 
 Datum year_ge(PG_FUNCTION_ARGS)
 {
-	uint8	arg1 = PG_GETARG_CHAR(0);
-	uint8	arg2 = PG_GETARG_CHAR(1);
+	uint8	arg1 = PG_GETARG_UINT16(0);
+	uint8	arg2 = PG_GETARG_UINT16(1);
 
 	PG_RETURN_BOOL(arg1 >= arg2);
 }
 
 Datum year_cmp(PG_FUNCTION_ARGS)
 {
-	uint8	arg1 = PG_GETARG_CHAR(0);
-	uint8	arg2 = PG_GETARG_CHAR(1);
+	uint8	arg1 = PG_GETARG_UINT16(0);
+	uint8	arg2 = PG_GETARG_UINT16(1);
 
-	PG_RETURN_CHAR(arg1 - arg2);
+	PG_RETURN_UINT16(arg1 - arg2);
 }
 
 
 Datum hash_year(PG_FUNCTION_ARGS)
 {
 
-	return(hash_uint32((uint32)PG_GETARG_CHAR(0)));
+	return(hash_uint32((uint32)PG_GETARG_UINT16(0)));
 }
