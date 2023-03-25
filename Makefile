@@ -1,3 +1,6 @@
+#
+# Makefile
+#
 MODULES = pg_year 
 EXTENSION = pg_year  # the extension's name
 DATA = pg_year--0.0.1.sql    # script file to install

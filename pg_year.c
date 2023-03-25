@@ -71,7 +71,7 @@ _PG_fini(void)
 
 Datum year_in(PG_FUNCTION_ARGS)
 {
-	short result;
+	uint16 result;
 
 	char *str = PG_GETARG_CSTRING(0);
 	result = strtol(str, NULL, 10);
@@ -94,12 +94,12 @@ Datum year_in(PG_FUNCTION_ARGS)
                )
 	      );
 	}
-	PG_RETURN_INT16((result - 1901));
+	PG_RETURN_UINT16((result - 1901));
 }
 
 Datum year_out(PG_FUNCTION_ARGS)
 {
-	int16 arg = PG_GETARG_INT16(0);
+	uint16 arg = (uint8)PG_GETARG_UINT16(0);
 	char *buffer = palloc(5 * sizeof(char));
 	arg = arg + 1901;
 	sprintf(buffer, "%d", arg);
@@ -110,9 +110,9 @@ Datum year_out(PG_FUNCTION_ARGS)
 
 Datum year_add(PG_FUNCTION_ARGS)
 {
-	int16	result;
-	int16 	arg1 = PG_GETARG_INT16(0);
-	int16 	arg2 = PG_GETARG_INT16(1);
+	uint32	result;
+	uint8 	arg1 = PG_GETARG_UINT16(0);
+	uint8 	arg2 = PG_GETARG_UINT16(1);
 
 	result = arg1 + 1901 + arg2; 
 	if (result > 2155) {
@@ -127,14 +127,14 @@ Datum year_add(PG_FUNCTION_ARGS)
 	}
 	
 	result = result - 1901;
-	PG_RETURN_INT16(result);
+	PG_RETURN_UINT16((uint8)result);
 }
 
 Datum year_minus(PG_FUNCTION_ARGS)
 {
-	int16	result;
-	int16 	arg1 = PG_GETARG_INT16(0);
-	int16 	arg2 = PG_GETARG_INT16(1);
+	uint32	result;
+	uint8 	arg1 = PG_GETARG_UINT16(0);
+	uint8 	arg2 = PG_GETARG_UINT16(1);
 	
 	result = arg1 + 1901 - arg2; 
 	if (result < 1901) {
@@ -158,68 +158,68 @@ Datum year_minus(PG_FUNCTION_ARGS)
 	}
 
 	result = result - 1901;
-	PG_RETURN_INT16(result);
+	PG_RETURN_UINT16((uint8)result);
 }
 
 Datum year_eq(PG_FUNCTION_ARGS)
 {
-	int16	arg1 = PG_GETARG_INT16(0);
-	int16	arg2 = PG_GETARG_INT16(1);
+	uint8	arg1 = PG_GETARG_CHAR(0);
+	uint8	arg2 = PG_GETARG_CHAR(1);
 
 	PG_RETURN_BOOL(arg1 == arg2);
 }
 
 Datum year_ne(PG_FUNCTION_ARGS)
 {
-	int16	arg1 = PG_GETARG_INT16(0);
-	int16	arg2 = PG_GETARG_INT16(1);
+	uint8	arg1 = PG_GETARG_CHAR(0);
+	uint8	arg2 = PG_GETARG_CHAR(1);
 
 	PG_RETURN_BOOL(arg1 != arg2);
 }
 
 Datum year_lt(PG_FUNCTION_ARGS)
 {
-	int16	arg1 = PG_GETARG_INT16(0);
-	int16	arg2 = PG_GETARG_INT16(1);
+	uint8	arg1 = PG_GETARG_CHAR(0);
+	uint8	arg2 = PG_GETARG_CHAR(1);
 
 	PG_RETURN_BOOL(arg1 < arg2);
 }
 
 Datum year_le(PG_FUNCTION_ARGS)
 {
-	int16	arg1 = PG_GETARG_INT16(0);
-	int16	arg2 = PG_GETARG_INT16(1);
+	uint8	arg1 = PG_GETARG_CHAR(0);
+	uint8	arg2 = PG_GETARG_CHAR(1);
 
 	PG_RETURN_BOOL(arg1 <= arg2);
 }
 
 Datum year_gt(PG_FUNCTION_ARGS)
 {
-	int16	arg1 = PG_GETARG_INT16(0);
-	int16	arg2 = PG_GETARG_INT16(1);
+	uint8	arg1 = PG_GETARG_CHAR(0);
+	uint8	arg2 = PG_GETARG_CHAR(1);
 
 	PG_RETURN_BOOL(arg1 > arg2);
 }
 
 Datum year_ge(PG_FUNCTION_ARGS)
 {
-	int16	arg1 = PG_GETARG_INT16(0);
-	int16	arg2 = PG_GETARG_INT16(1);
+	uint8	arg1 = PG_GETARG_CHAR(0);
+	uint8	arg2 = PG_GETARG_CHAR(1);
 
 	PG_RETURN_BOOL(arg1 >= arg2);
 }
 
 Datum year_cmp(PG_FUNCTION_ARGS)
 {
-	int16	arg1 = PG_GETARG_INT16(0);
-	int16	arg2 = PG_GETARG_INT16(1);
+	uint8	arg1 = PG_GETARG_CHAR(0);
+	uint8	arg2 = PG_GETARG_CHAR(1);
 
-	PG_RETURN_INT16(arg1 - arg2);
+	PG_RETURN_CHAR(arg1 - arg2);
 }
 
 
 Datum hash_year(PG_FUNCTION_ARGS)
 {
 
-	return(hash_uint32((int32)PG_GETARG_INT16(0)));
+	return(hash_uint32((uint32)PG_GETARG_CHAR(0)));
 }

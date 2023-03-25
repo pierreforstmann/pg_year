@@ -16,10 +16,11 @@ LANGUAGE C IMMUTABLE STRICT;
 CREATE TYPE year (
   INPUT          = year_in,
   OUTPUT         = year_out,
-  LIKE           = int2,
-  INTERNALLENGTH = 2,
-  STORAGE        = PLAIN,
-  PASSEDBYVALUE
+  LIKE           = char,
+  INTERNALLENGTH = 1,
+  ALIGNMENT      = char,
+  PASSEDBYVALUE,
+  STORAGE        = PLAIN
 );
 
 CREATE FUNCTION year_add(year, int)
